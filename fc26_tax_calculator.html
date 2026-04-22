@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FC26 Tax Calculator</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; padding: 20px; background: #1a1a1a; color: white; }
+        .card { background: #2d2d2d; padding: 20px; border-radius: 10px; width: 300px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        input { width: 90%; padding: 10px; margin: 10px 0; border-radius: 5px; border: none; }
+        .result { margin-top: 15px; border-top: 1px solid #444; padding-top: 10px; }
+        .profit { color: #4caf50; font-weight: bold; }
+        .loss { color: #f44336; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>FC26 Tax Calc</h2>
+    <label>Buy Price:</label>
+    <input type="number" id="buy" placeholder="e.g. 10000" oninput="calculate()">
+    
+    <label>Sell Price:</label>
+    <input type="number" id="sell" placeholder="e.g. 12000" oninput="calculate()">
+
+    <div class="result">
+        <p>Break-even: <span id="be">-</span></p>
+        <p>Tax (5%): <span id="tax">-</span></p>
+        <p>Profit: <span id="profit">-</span></p>
+    </div>
+</div>
+
+<script>
+function calculate() {
+    const buy = parseFloat(document.getElementById('buy').value) || 0;
+    const sell = parseFloat(document.getElementById('sell').value) || 0;
+    
+    const tax = sell * 0.05;
+    const profit = (sell - tax) - buy;
+    const breakEven = buy / 0.95;
+
+    document.getElementById('tax').innerText = Math.round(tax).toLocaleString();
+    document.getElementById('be').innerText = Math.round(breakEven).toLocaleString();
+    
+    const profitEl = document.getElementById('profit');
+    profitEl.innerText = Math.round(profit).toLocaleString();
+    profitEl.className = profit >= 0 ? 'profit' : 'loss';
+}
+</script>
+
+</body>
+</html>
